@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas, Baby🎄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background: linear-gradient(135deg, #fde2e4, #e2f0f9);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    color: #e63973;
+    animation: fadeDown 2s ease;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.camera-frame {
+    width: 280px;
+    height: 380px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    border: 6px solid #ffb3c6;
+    box-shadow: 0 0 25px rgba(255,179,198,0.8);
+    animation: glow 3s infinite alternate;
+    background: #fff;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(255,179,198,0.6); }
+    to { box-shadow: 0 0 35px rgba(255,179,198,1); }
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+.frame-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.85);
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9rem;
+    color: #e63973;
+    font-weight: 600;
+    animation: fadeUp 2s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-pastel {
+    background-color: #ffb3c6;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    transition: 0.3s;
+}
+
+.btn-pastel:hover {
+    background-color: #ff8fab;
+    transform: scale(1.05);
+}
+
+/* Snow */
+.snow {
+    position: fixed;
+    top: -10px;
+    color: white;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    color: #ff8fab;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <!-- Soft lullaby instrumental -->
+    <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_3b63b3f18c.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Snow -->
+<script>
+for (let i = 0; i < 25; i++) {
+    let snow = document.createElement("div");
+    snow.className = "snow";
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.animationDuration = (Math.random() * 5 + 6) + "s";
+    snow.style.opacity = Math.random();
+    snow.style.fontSize = (Math.random() * 15 + 10) + "px";
+    document.body.appendChild(snow);
+}
+</script>
+
+<!-- Floating hearts -->
+<script>
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 10000);
+}, 800);
+</script>
+
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
+
+    <h1 class="mb-3">Merry Christmas, Syra🎄</h1>
+    <p class="mb-4 text-muted">
+        This is why my Christmas feels warm and happy ❤️
+    </p>
+
+    <div class="camera-frame mb-4">
+        <video id="video" autoplay playsinline></video>
+        <div class="frame-overlay">
+            You are my Christmas gift! ✨
+        </div>
+    </div>
+
+    <button class="btn btn-pastel" onclick="startMagic()">
+        Click here to see the magic.🎁
+    </button>
+
+</div>
+
+<script>
+async function startMagic() {
+    // Start music
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+    music.play();
+
+    // Start camera
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "user" },
+            audio: false
+        });
+        document.getElementById("video").srcObject = stream;
+    } catch (err) {
+        alert("Please allow camera access ❤️");
+    }
+}
+</script>
+
+</body>
+</html>
+
