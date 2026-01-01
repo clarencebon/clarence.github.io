@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year My Love 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 🌸 BACKGROUND IMAGE */
+.bg-photo {
+    position: fixed;
+    inset: 0;
+    background: url("images/wow.jpeg") no-repeat center / cover;
+    z-index: -4;
+}
+
+/* 🌸 OVERLAY */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        rgba(255,209,220,0.85),
+        rgba(255,230,240,0.85)
+    );
+    z-index: -3;
+}
+
+/* 🌸 FLOATING ANIMATION */
+.bg-anim {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255,182,193,.4), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(255,192,203,.4), transparent 45%);
+    animation: floatBg 14s ease-in-out infinite alternate;
+    z-index: -2;
+}
+
+@keyframes floatBg {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* 🎆 FIREWORKS CANVAS */
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 🌸 CONTENT */
+.container {
+    text-align: center;
+    color: #7a294a;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+}
+
+/* 🎁 MYSTERY BOX GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    gap: 22px;
+    justify-content: center;
+}
+
+/* 🎁 CARD */
+.card {
+    width: 150px;
+    height: 150px;
+    perspective: 1200px;
+    cursor: pointer;
+}
+
+.inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.4,.2,.2,1);
+}
+
+.card.flipped .inner {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    backface-visibility: hidden;
+    text-align: center;
+}
+
+/* 🎀 FRONT (MYSTERY BOX) */
+.front {
+    background: linear-gradient(135deg, #ffc1d6, #ffb3cc);
+    box-shadow:
+        0 12px 30px rgba(176,48,96,.25),
+        inset 0 0 0 2px rgba(255,255,255,.4);
+    font-size: 2.2rem;
+    animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* Ribbon */
+.front::before, .front::after {
+    content: "";
+    position: absolute;
+    background: rgba(255,255,255,.75);
+}
+.front::before {
+    width: 22px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.front::after {
+    height: 22px;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 💌 BACK */
+.back {
+    background: rgba(255,255,255,.96);
+    color: #6b213f;
+    transform: rotateY(180deg);
+    font-size: .9rem;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(2, 150px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-photo"></div>
+<div class="bg-overlay"></div>
+<div class="bg-anim"></div>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+    <h1>🎆 Happy New Year 🎆</h1>
+    <p class="subtitle">Every box hides something I want you to know 💖</p>
+
+    <div class="grid">
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">🎁</div>
+                <div class="back">You made my year brighter just by being you.</div>
+            </div>
+        </div>
+
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">🎀</div>
+                <div class="back">I’m thankful for every moment we shared.</div>
+            </div>
+        </div>
+
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">💝</div>
+                <div class="back">You are someone I silently wish happiness for.</div>
+            </div>
+        </div>
+
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">🌸</div>
+                <div class="back">May this year be gentle and kind to you.</div>
+            </div>
+        </div>
+
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">✨</div>
+                <div class="back">You deserve a love that feels safe and real.</div>
+            </div>
+        </div>
+
+        <div class="card" onclick="flip(this)">
+            <div class="inner">
+                <div class="front">💕</div>
+                <div class="back">My wish this year is more time with you.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+function firework(x, y) {
+    const particles = [];
+    for (let i = 0; i < 45; i++) {
+        particles.push({
+            x, y,
+            angle: Math.random() * Math.PI * 2,
+            speed: Math.random() * 4 + 2,
+            life: 60
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p => {
+            p.x += Math.cos(p.angle) * p.speed;
+            p.y += Math.sin(p.angle) * p.speed;
+            p.life--;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,105,180,${p.life/60})`;
+            ctx.fill();
+        });
+        if (particles.some(p => p.life > 0)) requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+function flip(card) {
+    card.classList.toggle("flipped");
+    const r = card.getBoundingClientRect();
+    firework(r.left + r.width/2, r.top + r.height/2);
+}
+</script>
+
+</body>
+</html>
